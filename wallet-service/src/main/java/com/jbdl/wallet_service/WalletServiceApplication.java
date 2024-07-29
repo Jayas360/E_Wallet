@@ -1,5 +1,7 @@
-package com.jbdl.common_service;
+package com.jbdl.wallet_service;
 
+import com.jbdl.wallet_service.model.Wallet;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

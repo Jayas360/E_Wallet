@@ -14,18 +14,22 @@ public class UserService {
     @Autowired
     UserRepo userRepo;
 
+    @Autowired
+    KafkaProducerService kafkaProducerService;
+
     public UserResponse saveUser(UserRequest userRequest) {
         UserResponse userResponse = UserResponse.builder().name(userRequest.getName()).email(userRequest.getEmail()).build();
 
         try {
             User user = User.builder().name(userRequest.getName()).email(userRequest.getEmail()).mobileNo(userRequest.getMobileNo())
-                    .password(userRequest.getPassword()).userIdentifier(userRequest.getUserIdentifier()).build();
+                    .password(userRequest.getPassword()).userIdentifier(userRequest.getUserIdentifier()).identifierValue(userRequest.getIdentifierValue()).build();
             user.setUserType(UserType.NORMAL);
             user.setUserStatus(UserStatus.ACTIVE);
             User savedUser = userRepo.save(user);
             if (savedUser == null) {
                 userResponse.setMessage("User onboarding failed!");
             } else {
+                kafkaProducerService.sendNotification(user);
                 userResponse.setMessage("User created succesfully!");
             }
         } catch (Exception e) {

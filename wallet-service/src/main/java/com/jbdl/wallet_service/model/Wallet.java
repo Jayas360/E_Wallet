@@ -1,8 +1,6 @@
-package com.jbdl.user_service.model;
+package com.jbdl.wallet_service.model;
 
-import com.jbdl.user_service.enums.UserIdentifier;
-import com.jbdl.user_service.enums.UserStatus;
-import com.jbdl.user_service.enums.UserType;
+import com.jbdl.wallet_service.enums.UserIdentifier;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 
@@ -19,35 +17,26 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(nullable = false)
-    private String name;
+    private String userName;
 
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String mobileNo;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private UserIdentifier userIdentifier;
 
     @Column(nullable = false)
-    private String identifierValue;
+    private String userIdentifierValue;
 
-    @Enumerated(EnumType.STRING)
-    private UserStatus userStatus;
+    @Value(value = "${account.balance.initial}")
+    private double balance;
 
     @CreationTimestamp
     private Date createdOn;

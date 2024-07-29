@@ -1,6 +1,6 @@
 package com.jbdl.user_service.config;
 
-import com.jbdl.common_service.Commons;
+import com.jbdl.wallet_service.Commons;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;

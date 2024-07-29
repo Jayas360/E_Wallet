@@ -14,4 +14,5 @@ public class UserRequest {
     private String mobileNo;
     private String password;
     private UserIdentifier userIdentifier;
+    private String identifierValue;
 }
