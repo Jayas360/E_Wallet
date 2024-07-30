@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "transaction")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

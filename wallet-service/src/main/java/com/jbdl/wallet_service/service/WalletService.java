@@ -30,6 +30,15 @@ public class WalletService {
 
         System.out.println("wallet details saved in db");
         walletRepository.save(wallet);
-
     }
+
+    public Wallet getWalletByMobileNo(String mobileNo) {
+        Wallet wallet = walletRepository.findByMobileNo(mobileNo);
+        return wallet;
+    }
+
+    public void updateWalletBalance(String mobileNo, Double amount){
+        walletRepository.updateBalance(mobileNo, amount);
+    }
+
 }

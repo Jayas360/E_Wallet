@@ -22,7 +22,6 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("inside custom detail service!");
         String response = restTemplate.getForObject("http://localhost:8080/user-service/user/credentials?mobileNo=" + username, String.class);
-        System.out.println(response);
         JSONObject credentials = new JSONObject(response);
         String userName = credentials.optString(Commons.USER_MOBILE);
         String password = credentials.optString(Commons.USER_PASSWORD);

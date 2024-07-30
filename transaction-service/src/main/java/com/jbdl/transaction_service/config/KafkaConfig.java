@@ -1,8 +1,9 @@
-package com.jbdl.wallet_service.config;
+package com.jbdl.transaction_service.config;
 
 import com.jbdl.wallet_service.Commons;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,23 @@ import java.util.Map;
 
 @Configuration
 public class KafkaConfig {
+
+    @Bean
+    public ConsumerFactory<String, String> kafkaConsumer(){
+        Map<String, Object> config = new HashMap<>();
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Commons.KAFCA_BOOTSTRAP_SERVER_IP);
+        config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+
+        return new DefaultKafkaConsumerFactory<>(config);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String,String> concurrentKafkaListenerContainerFactory(){
+        ConcurrentKafkaListenerContainerFactory<String,String> containerFactory =  new ConcurrentKafkaListenerContainerFactory<>();
+        containerFactory.setConsumerFactory(kafkaConsumer());
+        return containerFactory;
+    }
 
     @Bean
     public ProducerFactory<String,String> producerFactory(){
@@ -30,18 +48,4 @@ public class KafkaConfig {
         return new KafkaTemplate<String,String>(producerFactory());
     }
 
-    @Bean
-    public ConsumerFactory<String,Object> consumerFactory() {
-        Map<String, Object> map = new HashMap<>();
-        map.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, Commons.KAFCA_BOOTSTRAP_SERVER_IP);
-        map.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        map.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        return new DefaultKafkaConsumerFactory<>(map);
-    }
-
-    public ConcurrentKafkaListenerContainerFactory<String, String> concurrentKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String,String> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
-        return factory;
-    }
 }

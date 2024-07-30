@@ -18,7 +18,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf(csrf -> csrf.disable()).authorizeHttpRequests(auth -> {
-            auth.requestMatchers("/initiate/transaction").authenticated();
+            auth.requestMatchers("/transaction/initiate").authenticated();
+            auth.requestMatchers("/transaction/history").permitAll();
         }).httpBasic(Customizer.withDefaults()).build();
     }
 
