@@ -6,6 +6,8 @@ import com.jbdl.user_service.model.User;
 import com.jbdl.user_service.repository.UserRepo;
 import com.jbdl.user_service.request.UserRequest;
 import com.jbdl.user_service.response.UserResponse;
+import com.jbdl.wallet_service.Commons;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +39,22 @@ public class UserService {
         }
 
         return userResponse;
+    }
+
+    public String getUserDetails(String mobileNo){
+        User user = userRepo.findByMobileNo(mobileNo);
+        JSONObject userCredential = new JSONObject();
+        String userId = null;
+        String password = null;
+
+        if(user != null){
+            userId = user.getMobileNo();
+            password = user.getPassword();
+        }
+        userCredential.put(Commons.USER_MOBILE, userId);
+        userCredential.put(Commons.USER_PASSWORD, password);
+        System.out.println("User credentials fetched!");
+        return userCredential.toString();
     }
 
 }

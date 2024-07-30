@@ -9,5 +9,6 @@ public class Commons {
     public static final String USER_IDENTIFIER = "identifier";
     public static final String USER_IDENTIFIER_VALUE = "identifierValue";
     public static final String USER_MOBILE = "mobileNo";
+    public static final String USER_PASSWORD = "password";
 
 }

@@ -27,4 +27,10 @@ public class UserController {
     public String publicUrl(){
         return "public url";
     }
+
+    @GetMapping("/user/credentials")
+    public String fetchUserCredentials(@RequestParam("mobileNo") String mobileNo) {
+        String credentials = userService.getUserDetails(mobileNo);
+        return credentials;
+    }
 }
