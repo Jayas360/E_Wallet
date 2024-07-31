@@ -20,7 +20,7 @@ public class UserEmailNotificationListener {
         String email = userDetails.optString(Commons.USER_EMAIL);
         String identifier = userDetails.optString(Commons.USER_IDENTIFIER);
         System.out.println("user information listened : " + data);
-//        emailNotificationWorker.sendEmailNotificationToUser(name, email, identifier);
+        emailNotificationWorker.sendEmailNotificationToUser(name, email, identifier);
 
     }
 }
